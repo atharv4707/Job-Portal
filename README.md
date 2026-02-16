@@ -111,6 +111,24 @@ See `server/.env.example`:
 - `ACCESS_TOKEN_EXPIRY`
 - `REFRESH_TOKEN_EXPIRY`
 
+## Vercel (Single Project Deploy)
+This repo includes a root `vercel.json` that serves both frontend (`client/`) and backend API (`server/`) in one deploy.
+
+1. Import the repo in Vercel.
+2. Set project root to repository root (`.`), not `server`.
+3. Framework preset: `Other`.
+4. Add environment variables:
+   - `DATABASE_URL`
+   - `JWT_ACCESS_SECRET`
+   - `JWT_REFRESH_SECRET`
+   - `NODE_ENV=production`
+   - `CLIENT_ORIGIN=https://<your-vercel-domain>`
+5. Deploy.
+
+After deploy:
+- Frontend is served from `/`
+- API is served from `/api/*`
+
 ## Notes
 - Frontend is served as static files through Express.
 - Auth tokens are stored in `HttpOnly` cookies.
