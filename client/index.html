@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hirescape | Job Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">Hirescape</a>
+        <nav class="nav-links">
+          <a class="btn btn-ghost" href="/jobs.html">Browse Jobs</a>
+          <a class="btn btn-outline" href="/auth.html">Login / Register</a>
+          <a class="btn btn-primary hidden" href="#" id="dashboard-link">Dashboard</a>
+          <button class="btn btn-danger hidden" id="logout-btn" type="button">Logout</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Build your career with focused opportunities.</h1>
+        <p>
+          Search open roles, apply quickly, and track every application status in one place. Employers
+          can post jobs and review candidates from a clean dashboard.
+        </p>
+      </section>
+
+      <section class="card" style="margin-bottom: 1rem">
+        <form id="quick-search-form">
+          <div class="row">
+            <div>
+              <label for="q">Keyword</label>
+              <input id="q" name="q" placeholder="React, Node, Designer..." />
+            </div>
+            <div>
+              <label for="location">Location</label>
+              <input id="location" name="location" placeholder="Pune, Bengaluru, Remote..." />
+            </div>
+            <div>
+              <label for="jobType">Job Type</label>
+              <select id="jobType" name="jobType">
+                <option value="">Any</option>
+                <option>Internship</option>
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>Remote</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Search Jobs</button>
+        </form>
+      </section>
+
+      <section>
+        <div class="toolbar">
+          <h2>Latest Openings</h2>
+          <a href="/jobs.html" class="btn btn-outline">View all</a>
+        </div>
+        <div id="latest-jobs" class="grid grid-2"></div>
+      </section>
+      <div class="footer-space"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="js/index.js"></script>
+  </body>
+  </html>
+

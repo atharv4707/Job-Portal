@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  JOBSEEKER
+  EMPLOYER
+  ADMIN
+}
+
+enum JobStatus {
+  OPEN
+  FILLED
+  CLOSED
+}
+
+enum ApplicationStatus {
+  APPLIED
+  UNDER_REVIEW
+  REJECTED
+  SELECTED
+}
+
+model User {
+  id               String             @id @default(cuid())
+  name             String
+  email            String             @unique
+  passwordHash     String
+  role             Role
+  refreshTokenHash String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  jobSeekerProfile JobSeekerProfile?
+  employerProfile  EmployerProfile?
+  jobs             Job[]
+  applications     Application[]      @relation("JobSeekerApplications")
+}
+
+model JobSeekerProfile {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone      String   @default("")
+  location   String   @default("")
+  skills     Json?
+  education  Json?
+  experience Json?
+  resumeUrl  String   @default("")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model EmployerProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName        String   @default("")
+  companyWebsite     String   @default("")
+  companyDescription String   @default("")
+  location           String   @default("")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Job {
+  id           String        @id @default(cuid())
+  employerId   String
+  employer     User          @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  title        String
+  description  String
+  requirements Json
+  location     String
+  jobType      String
+  salaryRange  String        @default("")
+  deadline     DateTime?
+  status       JobStatus     @default(OPEN)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  applications Application[]
+
+  @@index([location, jobType, status, createdAt])
+}
+
+model Application {
+  id                String            @id @default(cuid())
+  jobId             String
+  jobseekerId       String
+  job               Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobseeker         User              @relation("JobSeekerApplications", fields: [jobseekerId], references: [id], onDelete: Cascade)
+  coverLetter       String            @default("")
+  resumeUrlSnapshot String            @default("")
+  status            ApplicationStatus @default(APPLIED)
+  appliedAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@unique([jobId, jobseekerId])
+  @@index([status])
+}

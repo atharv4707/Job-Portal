@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Seeker Dashboard | Hirescape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">Hirescape</a>
+        <nav class="nav-links">
+          <a class="btn btn-ghost" href="/jobs.html">Browse Jobs</a>
+          <button class="btn btn-danger" type="button" id="logout-btn">Logout</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="padding: 2rem 0">
+      <section class="card">
+        <h2>My Profile</h2>
+        <form id="profile-form">
+          <div class="row">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" />
+            </div>
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" />
+            </div>
+            <div>
+              <label for="location">Location</label>
+              <input id="location" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="skills">Skills (comma separated)</label>
+              <input id="skills" />
+            </div>
+            <div>
+              <label for="education">Education (comma separated)</label>
+              <input id="education" />
+            </div>
+            <div>
+              <label for="experience">Experience (comma separated)</label>
+              <input id="experience" />
+            </div>
+          </div>
+          <div>
+            <label for="resumeUrl">Resume URL</label>
+            <input id="resumeUrl" />
+          </div>
+          <button class="btn btn-primary" type="submit">Save Profile</button>
+        </form>
+      </section>
+
+      <section class="card" style="margin-top: 1rem">
+        <div class="toolbar">
+          <h2>My Applications</h2>
+          <button class="btn btn-ghost" id="refresh-apps" type="button">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Job</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Applied At</th>
+              </tr>
+            </thead>
+            <tbody id="applications-body"></tbody>
+          </table>
+        </div>
+      </section>
+      <div class="footer-space"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="js/seeker.js"></script>
+  </body>
+  </html>
+

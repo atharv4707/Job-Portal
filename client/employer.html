@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employer Dashboard | Hirescape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">Hirescape</a>
+        <nav class="nav-links">
+          <a class="btn btn-ghost" href="/jobs.html">Browse Jobs</a>
+          <button class="btn btn-danger" id="logout-btn" type="button">Logout</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="padding: 2rem 0">
+      <section class="grid grid-2">
+        <article class="card">
+          <h2>Company Profile</h2>
+          <form id="company-form">
+            <div>
+              <label for="name">Your Name</label>
+              <input id="name" />
+            </div>
+            <div>
+              <label for="companyName">Company Name</label>
+              <input id="companyName" />
+            </div>
+            <div>
+              <label for="companyWebsite">Website</label>
+              <input id="companyWebsite" />
+            </div>
+            <div>
+              <label for="companyLocation">Location</label>
+              <input id="companyLocation" />
+            </div>
+            <div>
+              <label for="companyDescription">Description</label>
+              <textarea id="companyDescription"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Save Company</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2>Create Job</h2>
+          <form id="job-form">
+            <div>
+              <label for="title">Title</label>
+              <input id="title" required />
+            </div>
+            <div>
+              <label for="description">Description</label>
+              <textarea id="description" required></textarea>
+            </div>
+            <div class="row">
+              <div>
+                <label for="location">Location</label>
+                <input id="location" required />
+              </div>
+              <div>
+                <label for="jobType">Job Type</label>
+                <select id="jobType" required>
+                  <option>Internship</option>
+                  <option>Full-time</option>
+                  <option>Part-time</option>
+                  <option>Remote</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="salaryRange">Salary Range</label>
+                <input id="salaryRange" />
+              </div>
+              <div>
+                <label for="deadline">Deadline</label>
+                <input id="deadline" type="date" />
+              </div>
+            </div>
+            <div>
+              <label for="requirements">Requirements (comma separated)</label>
+              <input id="requirements" />
+            </div>
+            <button class="btn btn-primary" type="submit">Post Job</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="card" style="margin-top: 1rem">
+        <div class="toolbar">
+          <h2>My Jobs</h2>
+          <button class="btn btn-ghost" id="refresh-jobs" type="button">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="jobs-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top: 1rem">
+        <div class="toolbar">
+          <h2>Applicants</h2>
+          <span class="meta" id="applicants-title">Select a job to view applicants</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Contact</th>
+                <th>Status</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody id="applicants-body"></tbody>
+          </table>
+        </div>
+      </section>
+      <div class="footer-space"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="js/employer.js"></script>
+  </body>
+  </html>
+

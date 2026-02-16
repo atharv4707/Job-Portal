@@ -1,0 +1,46 @@
+{
+  "name": "job-portal-server",
+  "version": "1.0.0",
+  "description": "Backend API for job portal",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "test": "set NODE_ENV=test&& jest --runInBand",
+    "seed": "node prisma/seed.js",
+    "prisma:seed": "prisma db seed",
+    "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "keywords": [
+    "job-portal",
+    "express",
+    "mysql",
+    "prisma"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "@prisma/client": "^6.3.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0",
+    "prisma": "^6.3.1"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
+}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jobs | Hirescape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">Hirescape</a>
+        <nav class="nav-links">
+          <a class="btn btn-ghost" href="/">Home</a>
+          <a class="btn btn-outline" href="/auth.html">Login / Register</a>
+          <a class="btn btn-primary hidden" href="#" id="dashboard-link">Dashboard</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="padding: 2rem 0">
+      <section class="card">
+        <h2>Search Jobs</h2>
+        <form id="filter-form">
+          <div class="row">
+            <div>
+              <label for="q">Keyword</label>
+              <input id="q" name="q" placeholder="React, Backend, Design..." />
+            </div>
+            <div>
+              <label for="location">Location</label>
+              <input id="location" name="location" placeholder="Mumbai, Delhi, Remote..." />
+            </div>
+            <div>
+              <label for="jobType">Job Type</label>
+              <select id="jobType" name="jobType">
+                <option value="">Any</option>
+                <option>Internship</option>
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>Remote</option>
+              </select>
+            </div>
+            <div>
+              <label for="status">Status</label>
+              <select id="status" name="status">
+                <option value="">Any</option>
+                <option>OPEN</option>
+                <option>FILLED</option>
+                <option>CLOSED</option>
+              </select>
+            </div>
+          </div>
+          <div class="toolbar">
+            <button class="btn btn-primary" type="submit">Apply filters</button>
+            <button class="btn btn-ghost" type="button" id="clear-filters">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <section style="margin-top: 1rem">
+        <div id="jobs-grid" class="grid grid-2"></div>
+      </section>
+      <div class="footer-space"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="js/jobs.js"></script>
+  </body>
+  </html>
+

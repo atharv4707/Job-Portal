@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth | Hirescape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">Hirescape</a>
+        <nav class="nav-links">
+          <a class="btn btn-ghost" href="/">Home</a>
+          <a class="btn btn-ghost" href="/jobs.html">Browse Jobs</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="padding: 2rem 0">
+      <section class="card auth-card">
+        <div id="register-panel">
+          <h2>Create Account</h2>
+          <p class="meta">Create your account first, then login.</p>
+          <form id="register-form">
+            <div>
+              <label for="reg-name">Name</label>
+              <input id="reg-name" required />
+            </div>
+            <div>
+              <label for="reg-email">Email</label>
+              <input id="reg-email" type="email" required />
+            </div>
+            <div>
+              <label for="reg-password">Password</label>
+              <input id="reg-password" type="password" minlength="6" required />
+            </div>
+            <div>
+              <label for="reg-role">Role</label>
+              <select id="reg-role" required>
+                <option value="JOBSEEKER">Job Seeker</option>
+                <option value="EMPLOYER">Employer</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Create account</button>
+          </form>
+          <p class="auth-switch">
+            <span class="meta">Already registered?</span>
+            <button id="show-login-btn" class="link-btn" type="button">Go to login</button>
+          </p>
+        </div>
+
+        <div id="login-panel" class="hidden">
+          <h2>Login</h2>
+          <p class="meta">Use the account you created to continue.</p>
+          <form id="login-form">
+            <div>
+              <label for="login-email">Email</label>
+              <input id="login-email" type="email" required />
+            </div>
+            <div>
+              <label for="login-password">Password</label>
+              <input id="login-password" type="password" required />
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+          </form>
+          <p class="auth-switch">
+            <span class="meta">Need an account?</span>
+            <button id="show-register-btn" class="link-btn" type="button">Create account</button>
+          </p>
+        </div>
+      </section>
+      <div class="footer-space"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="js/auth.js"></script>
+  </body>
+  </html>
