@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - JobConnect</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <img src="/images/logo.svg" alt="JobConnect" style="width: 40px; height: 40px; margin-right: 0.5rem;">
+        JobConnect
+      </a>
+      <ul class="nav-links">
+        <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/jobs"><i class="fas fa-search"></i> Browse Jobs</a></li>
+        <li><a href="/register"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="form-container">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <img src="/images/logo.svg" alt="JobConnect" style="width: 80px; height: 80px; margin-bottom: 1rem;">
+      <h2><i class="fas fa-sign-in-alt"></i> Welcome Back</h2>
+    </div>
+    <div id="alertMessage"></div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="your@email.com">
+      </div>
+
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> Password</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-sign-in-alt"></i> Login Now
+      </button>
+    </form>
+
+    <p style="text-align: center; margin-top: 1.5rem; font-size: 1rem;">
+      Don't have an account? 
+      <a href="/register" style="color: #667eea; font-weight: 600; text-decoration: none;">
+        <i class="fas fa-user-plus"></i> Sign up here
+      </a>
+    </p>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showAlert('Login successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 1000);
+        } else {
+          showAlert(data.message || 'Login failed', 'error');
+        }
+      } catch (error) {
+        showAlert('Something went wrong. Please try again.', 'error');
+      }
+    });
+
+    function showAlert(message, type) {
+      const alertDiv = document.getElementById('alertMessage');
+      alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+      setTimeout(() => {
+        alertDiv.innerHTML = '';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>

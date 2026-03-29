@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - JobConnect</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <img src="/images/logo.svg" alt="JobConnect" style="width: 40px; height: 40px; margin-right: 0.5rem;">
+        JobConnect
+      </a>
+      <ul class="nav-links">
+        <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/jobs"><i class="fas fa-search"></i> Browse Jobs</a></li>
+        <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="form-container">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <img src="/images/logo.svg" alt="JobConnect" style="width: 80px; height: 80px; margin-bottom: 1rem;">
+      <h2><i class="fas fa-user-plus"></i> Create Your Account</h2>
+    </div>
+    <div id="alertMessage"></div>
+    
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="name"><i class="fas fa-user"></i> Full Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> Password</label>
+        <input type="password" id="password" name="password" required minlength="6">
+      </div>
+
+      <div class="form-group">
+        <label for="role"><i class="fas fa-user-tag"></i> I am a</label>
+        <select id="role" name="role" required onchange="toggleCompanyField()">
+          <option value="">Select your role</option>
+          <option value="jobseeker">Job Seeker</option>
+          <option value="employer">Employer</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="companyField" style="display: none;">
+        <label for="companyName"><i class="fas fa-building"></i> Company Name</label>
+        <input type="text" id="companyName" name="companyName">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-rocket"></i> Sign Up
+      </button>
+    </form>
+
+    <p style="text-align: center; margin-top: 1.5rem;">
+      Already have an account? 
+      <a href="/login" style="color: #667eea; font-weight: 600; text-decoration: none;">
+        <i class="fas fa-sign-in-alt"></i> Login here
+      </a>
+    </p>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    function toggleCompanyField() {
+      const role = document.getElementById('role').value;
+      const companyField = document.getElementById('companyField');
+      
+      if (role === 'employer') {
+        companyField.style.display = 'block';
+        document.getElementById('companyName').required = true;
+      } else {
+        companyField.style.display = 'none';
+        document.getElementById('companyName').required = false;
+      }
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value,
+        companyName: document.getElementById('companyName').value
+      };
+      
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showAlert('Registration successful! Redirecting to login...', 'success');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1500);
+        } else {
+          showAlert(data.message || 'Registration failed', 'error');
+        }
+      } catch (error) {
+        showAlert('Something went wrong. Please try again.', 'error');
+      }
+    });
+
+    function showAlert(message, type) {
+      const alertDiv = document.getElementById('alertMessage');
+      alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+      setTimeout(() => {
+        alertDiv.innerHTML = '';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>

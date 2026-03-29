@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post a Job - JobConnect</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <img src="/images/logo.svg" alt="JobConnect" style="height: 36px; vertical-align: middle; margin-right: 8px;">
+        JobConnect
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/jobs"><i class="fas fa-briefcase"></i> Browse Jobs</a></li>
+        <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="#" onclick="logout()" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="form-container" style="max-width: 700px;">
+    <h2><i class="fas fa-plus-circle" style="color: #667eea; margin-right: 0.5rem;"></i>Post a New Job</h2>
+    <div id="alertMessage"></div>
+    
+    <form id="postJobForm">
+      <div class="form-group">
+        <label for="title">Job Title</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input type="text" id="company" name="company" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Job Description</label>
+        <textarea id="description" name="description" rows="5" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="requirements">Requirements</label>
+        <textarea id="requirements" name="requirements" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" required>
+      </div>
+
+      <div class="form-group">
+        <label for="jobType">Job Type</label>
+        <select id="jobType" name="jobType" required>
+          <option value="">Select job type</option>
+          <option value="Full-time">Full-time</option>
+          <option value="Part-time">Part-time</option>
+          <option value="Internship">Internship</option>
+          <option value="Contract">Contract</option>
+          <option value="Remote">Remote</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="salary">Salary Range</label>
+        <input type="text" id="salary" name="salary" placeholder="e.g., $50,000 - $70,000">
+      </div>
+
+      <div class="form-group">
+        <label for="deadline">Application Deadline</label>
+        <input type="date" id="deadline" name="deadline" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/dashboard'">Cancel</button>
+        <button type="submit" class="btn btn-primary">Post Job</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      const user = await checkAuth();
+      if (!user || user.role !== 'employer') {
+        window.location.href = '/login';
+      }
+
+      // Set company name from user profile
+      document.getElementById('company').value = user.name;
+      
+      // Set minimum date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('deadline').min = today;
+    });
+
+    document.getElementById('postJobForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = {
+        title: document.getElementById('title').value,
+        company: document.getElementById('company').value,
+        description: document.getElementById('description').value,
+        requirements: document.getElementById('requirements').value,
+        location: document.getElementById('location').value,
+        jobType: document.getElementById('jobType').value,
+        salary: document.getElementById('salary').value || 'Not disclosed',
+        deadline: document.getElementById('deadline').value
+      };
+      
+      try {
+        const response = await fetch('/api/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showAlert('Job posted successfully! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 1500);
+        } else {
+          showAlert(data.message || 'Failed to post job', 'error');
+        }
+      } catch (error) {
+        showAlert('Something went wrong. Please try again.', 'error');
+      }
+    });
+
+    function showAlert(message, type) {
+      const alertDiv = document.getElementById('alertMessage');
+      alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+      setTimeout(() => {
+        alertDiv.innerHTML = '';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
